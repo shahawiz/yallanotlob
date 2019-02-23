@@ -1,4 +1,4 @@
-<%= form_with(model: order, local: true) do |form| %>
+<%= form_for [@user,@order] do |f| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -12,22 +12,36 @@
   <% end %>
 
   <div class="field">
-  <%= form.label :From %>
-  <%= form.text_field :From %>
+    <%= f.label :name, "For" %>
+    <select name="order[name]" id="order_name">
+      <option value="breakfast">BreakFast</option>
+      <option value="lunch">Lunch</option>
+
+      <option value="dinner">Dinner</option>
+    </select>
+
+  </div>
+
+  <div class="field">
+    <%= f.label :restaurant %>
+    <%= f.text_field :restaurant %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_name , data: { autocomplete_source: users_path} %>
+  </div>
+  <div class="field">
+    <ul id="added">
+
+    </ul>
+
 </div>
-
-
-  <div class="field">
-    <%= form.label :From %>
-    <%= form.text_field :From %>
-  </div>
-
-  <div class="field">
-    <%= form.label :Friends %>
-    <%= form.text_field :Friends %>
-  </div>
-
+<div class="field">
+  <%= f.file_field :avatar %>
+</div>
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit %>
   </div>
 <% end %>
