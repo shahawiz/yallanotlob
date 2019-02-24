@@ -1,0 +1,64 @@
+  <div class="row">
+
+	<div class="col-md-6">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Latest Orders</h4>
+										<p class="card-category">The latest 5 orders made by you</p>
+									</div>
+									<div class="card-body">
+											<table class="table table-striped mt-3">
+													<thead>
+													
+													</thead>
+													<tbody>
+                                                     <% @orders.limit(5).each do |order| %>
+														<tr>
+															<td><i class="la la-truck"></i></td>
+															<td><b><%= link_to   order_url(order) do %>
+                                                             <%= order.typ %> </b></td>
+															<td><i class="la la-calendar"></i> <%= order.created_at %></td>
+														</tr>
+                                                                      <% end %>
+              
+                                                        <% end %>
+		
+													
+													</tbody>
+												</table>
+									</div>
+						
+								</div>
+</div>
+<div class="col-md-6">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Friends Activity</h4>
+										<p class="card-category">
+										You can keep up with your friends activity</p>
+									</div>
+									<div class="card-body">
+											<table class="table table-striped mt-3">
+													<thead>
+													
+													</thead>
+													<tbody>
+														<tr>
+                                                   <% @all.each do |forder| %>
+                                                  <% forder.each do |order|%>
+															<td><i class="la la-user"></i></td>
+															<td><b><%= order.user.name %></b> has created and order for <b><%= order.typ %></b> from <b><%= order.resturant %></b></td>
+														</tr>
+	                                                      <% end %>
+              
+                                                        <% end %>
+													</tbody>
+												</table>
+									</div>
+								</div>
+							</div>
+					
+
+
+    
+</div>

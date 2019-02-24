@@ -1,0 +1,156 @@
+<% content_for :grpscls do 'active' end%>
+
+
+<p id="notice"><%= notice %></p>
+
+<div id="add-grp-pnl" class="panel panel-default">
+  <div class="panel-body add-grp-pnl">
+    <!-- Search input-->
+  <label class="col-md-1 control-label grp-lbl" for="searchinput">Group</label>
+  <div class="col-md-9">
+    <div class="form-group">
+      <input id="searchinput" name="searchinput" type="search" placeholder="Add new group" class="form-control input-md add-grp-txt">
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="form-group">
+      <button class="btn btn-primary full new-grp-btn">Add new group</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 panel-right">
+    <h3>My Groups</h3>
+
+    <div class="panel panel-default down-pnl">
+      <!-- <div class="panel-heading pnl-head">Groups</div> -->
+
+  <ul id="grps-list" class="list-group">
+
+    <li class="list-group-item list-grp hidden">
+      <div class="grp-controls">
+        <i class="fa fa-remove lft grp-item-btn btn-remove rmv-id" grpid="999" aria-hidden="true"></i>
+        <i class="fa fa-edit lft grp-item-btn btn-edit" aria-hidden="true"></i>
+        <i class="fa fa-user-plus lft grp-item-btn btn-add add-id" grpid="999" aria-hidden="true"></i>
+        <span class="grp-name">Group Name</span>
+      </div>
+
+      <div class="grp-input">
+        <form>
+          <input type="text" name="name" class="form-control grp-val" grpid="999" value="Group Name">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <input type="hidden" name="_method" value="patch">
+          <input type="hidden" name="user_id" value="1">
+        </form>
+        <div>
+          <i class="fa fa-times-circle lft grp-item-btn btn-close input-save-btn" aria-hidden="true"></i>
+          <i class="fa fa-save lft grp-item-btn input-save-btn save-btn save-id" aria-hidden="true" grpid="999"></i>
+
+        </div>
+
+      </div>
+
+    </li>
+
+    <% @groups.each do |group| %>
+    <li class="list-group-item">
+      <div class="grp-controls">
+        <i class="fa fa-remove lft grp-item-btn btn-remove" grpid="<%= group.id %>" aria-hidden="true"></i>
+
+        <i class="fa fa-edit lft grp-item-btn btn-edit" aria-hidden="true"></i>
+        <i class="fa fa-user-plus lft grp-item-btn btn-add" grpid="<%= group.id %>" aria-hidden="true"></i>
+        <span><%= group.name %></span>
+      </div>
+
+      <div class="grp-input">
+        <form>
+          <input type="text" name="name" class="form-control" grpid="1" value="<%= group.name %>">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <input type="hidden" name="_method" value="patch">
+          <input type="hidden" name="user_id" value="1">
+        </form>
+        <div>
+          <i class="fa fa-times-circle lft grp-item-btn btn-close input-save-btn" aria-hidden="true" grpid="1"></i>
+          <i class="fa fa-save lft grp-item-btn input-save-btn save-btn" aria-hidden="true" grpid="<%= group.id %>"></i>
+
+        </div>
+
+      </div>
+
+    </li>
+    <% end %>
+  </ul>
+
+    </div><!-- ./panel -->
+
+  </div><!-- /right col-->
+
+  <div class="col-md-8 panel-left">
+
+    <h3 id="grpname" grpid="999">Group Name</h3>
+    <div id="grp-pnl" class="panel panel-default down-pnl frnds-pnl">
+      <!-- <div class="panel-heading pnl-head">Panel heading without title</div> -->
+      <div class="panel-body frnd-pnl">
+        <label class="col-md-3 control-label grp-lbl" for="frnd-email">Your friend E-mail</label>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input id="frnd-email" name="searchinput" type="search" placeholder="Add your friend e-mail" class="form-control input-md add-grp-txt">
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <button id="add-frnd" class="btn btn-primary full">Add friend</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-4 user-thumb">
+        <div class="thumbnail">
+          <span class="rmv-frnd" usrid="990"><i class="fa fa-close"></i></span>
+          <img class="frnd-img" src="ff" alt="...">
+          <div class="caption">
+          </div>
+        </div>
+      </div>
+
+      <div class="row frnds-row">
+
+
+
+      </div>
+
+      </div>
+
+    </div><!-- ./panel -->
+
+  </div>
+</div><!-- ./row -->
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td><%= group.name %></td>
+        <td><%= link_to 'Show', group %></td>
+        <td><%= link_to 'Edit', edit_group_path(group) %></td>
+        <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Group', new_group_path %>
+ -->

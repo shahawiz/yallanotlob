@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title"><i class="la la-shopping-cart"></i>Orders</h4>
+										<p class="card-category">All orders made by you</p>
+									</div>
+									<div class="card-body">
+                                            <div class="table-responsive">
+                                            <table class="table table-striped mt-3">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#ID</th>
+                                                            <th scope="col">Order</th>
+                                                            <th scope="col">Resturant</th>
+                                                            <th scope="col">Order BY</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                     <% @orders.each do |order| %>
+                                                        <tr>
+                                                            <td><%= order.id %></td>
+                                                            <td><b><%= order.typ %></b></td>
+                                                            <td><%= order.resturant %></td>
+                                                            <td><b><%= order.user.name %></b></td>
+                                                            <td><%= order.statu %></td>
+                                                            <td>
+                                                                    <a href="/orders/<%= order.id %>" class="btn btn-primary">View</a>
+                                                                    <button class="btn btn-success">Finish</button>
+                                                                    <button class="btn btn-danger">Cancel</button>
+                                                            </td>
+                                                        </tr>
+                                                         <% end %>
+
+                                                                       <% @inivtedOrder.each do |order| %>
+                                                        <tr>
+                                                            <td><%= order.id %></td>
+                                                            <td><b><%= order.typ %></b></td>
+                                                            <td><%= order.resturant %></td>
+                                                            <td><b><%= order.user.name %></b></td>
+                                                            <td><%= order.statu %></td>
+                                                            <td>
+                                                                    <a href="/orders/<%= order.id %>" class="btn btn-primary">View</a>
+                                                            </td>
+                                                        </tr>
+                                                         <% end %>
+  
+                                                    </tbody>
+                                                </table>
+                                            </div>
+									</div>
+						
+								</div>
+							</div>
+	
+						</div>

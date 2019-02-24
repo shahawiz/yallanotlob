@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yalla Notlob</title>
+    <%= csrf_meta_tags %>
+
+<!--     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %> -->
+     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %> 
+
+    <%# <%= stylesheet_link_tag "bootstrap", media: "all" %>
+    <%# <%= stylesheet_link_tag "style", media: "all" %>
+    <%# <%= stylesheet_link_tag "font-awesome", media: "all" %> 
+    	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+		<%# <%= stylesheet_link_tag "bootstrap", media: "all" %>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+
+	<link rel="stylesheet" href="/assets/css/ready.css">
+	<link rel="stylesheet" href="/assets/css/demo.css">
+
+  </head>
+  <body>
+    <% unless current_user %>
+
+  <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+<%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %>
+
+<% else %>
+
+<!--   <%= current_user[:name] %>
+  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+ -->
+<% end %>
+
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="/" class="logo"> 
+					Yalla Notlob
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+					
+					<% if user_signed_in? %>
+	
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item dropdown hidden-caret">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							</a>
+
+						</li>
+						<li class="nav-item dropdown hidden-caret">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="la la-bell"></i>
+								 <% @notifications.each_with_index do |notification , index| %>
+								<span class="notification"><%= index+1 %></span>
+								  <% end %>
+							</a>
+							<ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
+								<li>
+									<div class="dropdown-title">Your notifications</div>
+								</li>
+								<li>
+									<div class="notif-center">
+                  <% @notifications.each do |notification| %>
+		
+										<% if notification[3] == "invite" %>
+										<a href="/orders/<%= notification[4] %>" orderid="<%= notification[4] %>">
+										<% elsif  notification[3] == "join" %>
+										<a href="/orders/<%= notification[4] %>" orderid="<%= notification[4] %>">
+										<% elsif  notification[3] == "cancel" %>
+
+										<% elsif  notification[3] == "finished" %>
+										<a href="/orders/<%= notification[4] %>" orderid="<%= notification[4] %>">
+										<% elsif  notification[3] == "orderOwner" %>
+										<a href="/orders/<%= notification[4] %>" orderid="<%= notification[4] %>">                            
+										<% end %>
+											<div class="notif-icon notif-danger"> <i class="la la-heart"></i> </div>
+											<div class="notif-content">
+												<span class="block">
+						  <% if notification[3] == "invite" %>
+                            <span class="notification-text"><%= notification[1] %></span> <span class="notif notification-join" href="#" orderid="<%= notification[4] %>">Join</span>
+                          <% elsif  notification[3] == "join" %>
+                            <span class="notification-text"><%= notification[1] %></span> <span class="notif notification-invite" href="/orders/<%= notification[4] %>" orderid="<%= notification[4] %>">Order</span>
+                          <% elsif  notification[3] == "cancel" %>
+                            <span class="notification-text"><%= notification[1] %></span>
+                          <% elsif  notification[3] == "finished" %>
+                            <span class="notification-text"><%= notification[1] %></span> <span class="notif notification-invite" href="/orders/<%= notification[4] %>" orderid="<%= notification[4] %>">View</span>
+                            <% elsif  notification[3] == "orderOwner" %>
+                            <span class="notification-text"><%= notification[1] %></span> <span class="notif notification-invite" href="/orders/<%= notification[4] %>" orderid="<%= notification[4] %>">View</span>                            
+                          <% end %>
+												</span>
+												<span class="time"><%= notification[5] %></span> 
+											</div>
+										</a>
+                    <% end %>
+									</div>
+								</li>
+								<li>
+									<a class="see-all" href="javascript:void(0);"> <strong>See all notifications</strong> <i class="la la-angle-right"></i> </a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="<%= current_user.image.url %>" alt="user-img" width="36" class="img-circle"><span >Hossam</span></span> </a>
+							<ul class="dropdown-menu dropdown-user">
+								<li>
+									<div class="user-box">
+										<div class="u-img"><%= image_tag current_user.image.url %></div>
+										<div class="u-text">
+											<h4>Welcome ,</h4>
+											<%= link_to user_path(current_user) ,method: :get do %>
+                      
+											<p class="text-muted"><%= current_user.name %></p><a href="/users/<%= current_user.id %>" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+										</div>
+									</li>
+									
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="/users/<%= current_user.id %>"><i class="ti-user"></i> My Profile</a>
+									<% end %>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="/users/sign_out"><i class="fa fa-power-off"></i> Logout</a>
+									
+								</ul>
+								<!-- /.dropdown-user -->
+							</li>
+						</ul>
+						<% end %>
+					</div>
+				</nav>
+			</div>
+			<div class="sidebar">
+				<div class="scrollbar-inner sidebar-wrapper">
+					<div class="user">
+						<% if user_signed_in? %>
+						<div class="photo">
+							<img src="<%= current_user.image.url %>">
+						</div>
+						<% end %>
+						<div class="info">
+							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+								<% if user_signed_in? %>
+									<%= current_user.name %>
+									<span class="user-level"><i class="la la-heart"></i>Food lover</span>
+									<span class="caret"></span>
+									<% end %>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample" aria-expanded="true" style="">
+								<ul class="nav">
+									<li>
+										<a href="#profile">
+											<span class="link-collapse">My Profile</span>
+										</a>
+									</li>
+									<li>
+										<a href="#edit">
+											<span class="link-collapse">Edit Profile</span>
+										</a>
+									</li>
+									<li>
+										<a href="#settings">
+											<span class="link-collapse">Settings</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="nav">
+							<li class="nav-item update-pro">
+									<a class="btn btn-primary" style="color:white;" href="/orders/new" >
+										<i class="la la-plus-circle"></i>
+										<p>New Order</p>
+									</a>
+								</li>
+						<li class="nav-item active">
+							<a href="/">
+								<i class="la la-home"></i>
+								<p>Home</p>
+							</a>
+						</li>
+						<li class="nav-item">
+								<a href="/orders">
+									<i class="la la-shopping-cart"></i>
+									<p>Orders</p>
+								</a>
+							</li>
+						<li class="nav-item">
+							<a href="/friendships">
+								<i class="la la-user"></i>
+								<p>Friends</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/groups">
+								<i class="la la-users"></i>
+								<p>Groups</p>
+							</a>
+						</li>
+
+		
+
+
+					</ul>
+				</div>
+			</div>
+<div class="main-panel">
+				<div class="content">
+					<div class="container-fluid">
+						
+      <%= yield %>
+</div>
+</div>
+
+
+  <footer class="footer">
+					<div class="container-fluid">
+						<nav class="pull-left">
+							<ul class="nav">
+								<li class="nav-item">
+									<a class="nav-link" href="#">
+										About us
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">
+										Help
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">
+											Terms of use
+									</a>
+								</li>
+								<li class="nav-item">
+										<a class="nav-link" href="#">
+												Privacy Statement
+										</a>
+									</li>
+							</ul>
+						</nav>
+						<div class="copyright ml-auto">
+							Yalla Notlob, made with <i class="la la-heart heart text-danger"></i> at <a>ITI Mansourah</a>
+						</div>				
+					</div>
+				</footer>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">									
+					<p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
+					<p>
+						<b>We'll let you know when it's done</b></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="/assets/js/core/popper.min.js"></script>
+<script src="/assets/js/core/bootstrap.min.js"></script>
+<script src="/assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="/assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<%# <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script> %>
+<script src="/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="/assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="/assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="/assets/js/ready.min.js"></script>
+<script src="/assets/js/demo.js"></script>
+</html>

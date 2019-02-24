@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+<!-- Add Group Section -->
+<div class="row">
+<div class="col-md-12 text-center" >
+        <div class="card">
+     
+
+       
+            <div class="card-body">
+                <div class="form-group" style="display:flex;">
+<%= render 'form', friendship: @friendship %>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- End Add Group Section -->
+						<div class="row">
+
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Group School Members</h4>
+										<p class="card-category">
+										Add or unfriend friends from group</p>
+									</div>
+									<div class="card-body">
+                                            <div class="row">
+                                       
+                                         <!-- User Card Start -->
+                                           <% @friendships.each do |friendship| %>
+
+                                         <div class="col-sm-3">
+                                                <div class="card">
+                                                        <div class="user-box">
+                                                                <div class="u-img"><img src="<%= friendship.friend.image %>" alt="user"></div>
+                                                                <div class="u-text">
+                                                                    <h4><%= friendship.friend.name %></h4>
+                                                                    <br>
+                                                                   <span class="deleteFriend" to=<%= friendship.friend.id %> ><a>unfriend</a></span>
+                                                                   </div>
+                                                                   
+                                                                </div>    
+                                                </div>
+                                        </div>
+                                          <% end %>
+
+                                         <!-- User Card End -->                                                                                                                                                                                               
+                                            </div>
+                                             
+									</div>
+								</div>
+							</div>
+						</div>
+
+	
+					</div>
+				</div>
+

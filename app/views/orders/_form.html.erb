@@ -1,0 +1,76 @@
+<%= form_with(model: order) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="container">
+  <div class="row">
+  <div class="col-md-6">
+  <div class="field">
+    <%= form.label :resturant %>
+    <%= form.text_field :resturant, id: :order_resturant %>
+  </div>
+
+  <div class="field">
+    <%= form.label :menu %>
+    <%= form.file_field :menu, id: :order_menu %>
+  </div>
+
+   <select id="order_typ">
+     <option value="Lunch">Lunch</option>
+     <option value="Breakfast">Breakfast</option>
+   </select>
+
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :statu, id: :order_statu, value: "Waiting...", disabled: true %>
+  </div>
+
+    <div class="field">
+      <%= form.label :Friend_Group %>
+      <%= form.text_field :user_id, id: :order_friendName, list: 'autocompleteList' %>
+      <datalist id="autocompleteList">
+        <% @friendships.each do |friendship|%>
+          <option value=<%= friendship.friend.name %>></option>
+        <% end %>
+        <% @allFreindinGroup.each do |g|%>
+          <option value=<%= g.name %>></option>
+        <% end %>
+      </datalist>
+    </div>
+
+    <div id="myFriendSelect">
+      <ul id="myFriendSelectUL">
+        <h3>My Friends</h3>
+        <% @friendships.each do |friendship| %>
+          <li friendEmail=<%= friendship.friend.email %> friendname=<%= friendship.friend.name %> friendimg=<%= friendship.friend.image %> >
+            <%= friendship.friend.name %>
+            <%= check_box_tag 'order_allFriends' ,  friendship.friend.id  , false, :class=>"myFriendSelect"  -%>
+
+          </li>
+        <% end %>
+
+      </ul>
+    </div>
+
+    <div class="actions">
+    <%=  form.button :submit,id: 'AddNewOrder'  %>
+  </div>
+    <%= link_to 'Back', orders_path %>
+  </div>
+    <div id="showFriends" class="col-md-6">
+      <ul>
+
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
